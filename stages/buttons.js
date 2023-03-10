@@ -28,7 +28,7 @@ class Button {
 export class Start extends Button {
     constructor(x, y) {
         super(x, y);
-        this.text = new TextHandler("start", x, y);
+        this.text = new TextHandler(" start", x-55, y-10);
     }
 
     draw(ctx) {
