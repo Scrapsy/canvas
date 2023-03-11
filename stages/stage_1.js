@@ -1,6 +1,6 @@
 export class Stage1 {
     constructor(pc) {
-        this.pc
+        this.pc = pc;
     }
 
     draw(ctx) {
@@ -9,5 +9,9 @@ export class Stage1 {
 
     action(controls) {
         this.pc.think(controls)
+    }
+
+    change_stage() {
+        return false;
     }
 }
