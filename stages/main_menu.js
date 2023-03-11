@@ -1,6 +1,6 @@
+import { Stage1 } from "./stage_1.js";
 import { Start } from "./buttons.js";
 import { TextHandler } from "./../text/text.js";
-import { Stage1 } from "./stage_1.js";
 
 export class MainMenu {
     constructor(pc) {
