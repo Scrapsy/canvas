@@ -12,7 +12,7 @@ export class PC {
             [-2, 0],
             [-2, -2],
         ];
-        this.controls = [false, false, false, false, false];
+        this.controls = false;
     }
 
     draw(ctx) {
@@ -23,10 +23,12 @@ export class PC {
         ctx.stroke();
 
         var flame_force = 3;
-        if (this.controls[1]) {
-            flame_force = 4;
-        } else if (this.controls[2]) {
-            flame_force = 2;
+        if (this.controls) {
+            if (this.controls.is_up) {
+                flame_force = 4;
+            } else if (this.controls.is_down) {
+                flame_force = 2;
+            }
         }
 
         ctx.moveTo(-2*this.size+this.x, 1.9*this.size+this.y);
@@ -38,16 +40,16 @@ export class PC {
 
     think(controls) {
         this.controls = controls;
-        if (controls[3]) { // Right
+        if (controls.is_right) { // Right
             this.x += this.speed;
         }
-        if (controls[0]) { // Left
+        if (controls.is_left) { // Left
             this.x -= this.speed;
         }
-        if (controls[2]) { // Down
+        if (controls.is_down) { // Down
             this.y += this.speed/2;
         }
-        if (controls[1]) { // Up
+        if (controls.is_up) { // Up
             this.y -= this.speed/2;
         }
 
@@ -55,7 +57,7 @@ export class PC {
             this.fire -= 1;
         }
 
-        if (this.fire <= 0 & controls[4]) {
+        if (this.fire <= 0 & controls.is_space) {
             this.fire = this.fire_rate;
             // BULLETTE!
         }

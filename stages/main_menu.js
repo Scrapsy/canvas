@@ -21,7 +21,7 @@ export class MainMenu {
 
     action(controls) {
         this.run_stage = false;
-        if (controls[4]) {
+        if (controls.is_space) {
             this.run_stage = new Stage1(this.pc);
         }
     }

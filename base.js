@@ -5,40 +5,38 @@ import { PC } from "./objects/pc.js";
 
 var c = document.getElementById("region");
 var ctx = c.getContext("2d");
-var player = new PC();
-//left, up, down, right, space
-var controls = [false, false, false, false, false];
 
-function keyDown(e) {
-    if (e.keyCode === 39) {
-        controls[3] = true;
-    } else if (e.keyCode === 37) {
-        controls[0] = true;
+var player = new PC();
+var controls = class {
+    is_left = false;
+    is_right = false;
+    is_up = false;
+    is_down = false;
+    is_space = false;
+};
+
+function updateControl(e, new_state) {
+    if (e.keyCode === 39 || e.keyCode === 68) {
+        controls.is_right = new_state;
+    } else if (e.keyCode === 37 || e.keyCode === 65) {
+        controls.is_left = new_state;
     }
-    if (e.keyCode === 38) {
-        controls[1] = true;
-    } else if (e.keyCode === 40) {
-        controls[2] = true;
+    if (e.keyCode === 38 || e.keyCode === 87) {
+        controls.is_up = new_state;
+    } else if (e.keyCode === 40 || e.keyCode === 83) {
+        controls.is_down = new_state;
     }
     if (e.keyCode === 32) {
-        controls[4] = true;
+        controls.is_space = new_state;
     }
 }
 
+function keyDown(e) {
+    updateControl(e, true);
+}
+
 function keyUp(e) {
-    if (e.keyCode === 39) {
-        controls[3] = false;
-    } else if (e.keyCode === 37) {
-        controls[0] = false;
-    }
-    if (e.keyCode === 38) {
-        controls[1] = false;
-    } else if (e.keyCode === 40) {
-        controls[2] = false;
-    }
-    if (e.keyCode === 32) {
-        controls[4] = false;
-    }
+    updateControl(e, false);
 }
 
 window.addEventListener("keydown", keyDown);
