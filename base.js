@@ -1,4 +1,4 @@
-import { draw_frame } from "./bg/frame.js";
+import { Framing } from "./bg/frame.js";
 import { MainMenu } from "./stages/main_menu.js";
 import { PC } from "./objects/pc.js";
 
@@ -44,13 +44,19 @@ function keyUp(e) {
 window.addEventListener("keydown", keyDown);
 window.addEventListener("keyup", keyUp);
 
+var frame = new Framing();
 var current_stage = new MainMenu(player);
 var new_stage = false;
 
 function main_loop() {
     ctx.beginPath();
-    draw_frame(ctx);
+    frame.draw_background(ctx);
+    ctx.closePath();
+    ctx.beginPath();
     current_stage.draw(ctx);
+    ctx.closePath();
+    ctx.beginPath();
+    frame.draw_foreground(ctx);
     ctx.closePath();
 
     current_stage.action(controls);
