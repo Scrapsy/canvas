@@ -1,7 +1,11 @@
+import { Bullet } from "./bullet.js";
+
 export class PC {
     constructor() {
         this.x=150; this.y=500; this.speed=2;
-        this.size=4; this.fire_rate=10; this.fire=0;
+        this.size=4; this.fire_rate=60; this.fire=this.fire_rate;
+        this.alliance="pc";
+
         this.lines = [
             [-2, -2],
             [0, -1],
@@ -56,10 +60,13 @@ export class PC {
         if (this.fire >= 0) {
             this.fire -= 1;
         }
+    }
 
-        if (this.fire <= 0 & controls.is_space) {
+    spawn() {
+        if (this.fire <= 0 & this.controls.is_space) {
             this.fire = this.fire_rate;
-            // BULLETTE!
+            return new Bullet(this.x, this.y, 0, this.alliance);
         }
+        return false;
     }
 }
