@@ -4,11 +4,12 @@ export class PC {
     constructor() {
         this.x=150; this.y=500; this.speed=2;
         this.size=4; this.fire_rate=60; this.fire=this.fire_rate;
-        this.alliance="pc";
+        this.alliance="pc"; this.color="#000";
+        this.width=2; this.height=2; this.hp=3; this.damage=0;
 
         this.lines = [
             [-2, -2],
-            [0, -1],
+            [0, -3],
             [2, -2],
             [2, 0],
             [3, 2],
@@ -20,6 +21,7 @@ export class PC {
     }
 
     draw(ctx) {
+        ctx.strokeStyle = this.color;
         ctx.moveTo(this.lines[0][0]*this.size+this.x, this.lines[0][1]*this.size+this.y);
         for (var i = this.lines.length - 1; i >= 0; i--) {
             ctx.lineTo(this.lines[i][0]*this.size+this.x, this.lines[i][1]*this.size+this.y);
@@ -57,8 +59,24 @@ export class PC {
             this.y -= this.speed/2;
         }
 
+        if (this.x < 5+this.size*2) {
+            this.x = 5+this.size*2;
+        } else if (295-this.size*2 < this.x) {
+            this.x = 295-this.size*2;
+        }
+
+        if (this.y < 5+this.size*2) {
+            this.y = 5+this.size*2;
+        } else if (550-this.size*2 < this.y) {
+            this.y = 550-this.size*2;
+        }
+
         if (this.fire >= 0) {
             this.fire -= 1;
+        }
+
+        if (this.hp <= this.damage) {
+            // TODO: Add death-effect and loose screen
         }
     }
 

@@ -11,6 +11,7 @@ export class Framing {
         ctx.fillRect(295, 0, 5, 600);
         ctx.fillRect(0, 550, 300, 50);
 
+        ctx.strokeStyle = "#000";
         ctx.moveTo(0, 0);
         ctx.lineTo(0, 600);
         ctx.lineTo(300, 600);

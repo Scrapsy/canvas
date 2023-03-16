@@ -26,7 +26,7 @@ function updateControl(e, new_state) {
     } else if (e.keyCode === 40 || e.keyCode === 83) {
         controls.is_down = new_state;
     }
-    if (e.keyCode === 32) {
+    if (e.keyCode === 32 || e.keyCode === 16) {
         controls.is_space = new_state;
     }
 }
@@ -50,9 +50,7 @@ function main_loop() {
     ctx.beginPath();
     frame.draw_background(ctx);
     ctx.closePath();
-    ctx.beginPath();
     current_stage.draw(ctx);
-    ctx.closePath();
     ctx.beginPath();
     frame.draw_foreground(ctx);
     ctx.closePath();
