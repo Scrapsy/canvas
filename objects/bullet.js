@@ -1,9 +1,12 @@
+import { Effect } from "./effects.js";
+
 class BaseBullet {
-    constructor(x, y, direction, alliance) {
+    constructor(x, y, direction, alliance, stage) {
         this.x=x; this.y=y; this.direction=direction;
         this.speed=4; this.alliance=alliance;
         this.size=4; this.color="#000";
         this.harm=1; this.has_struck=false;
+        this.stage=stage;
     }
 
     think() {
@@ -19,10 +22,10 @@ class BaseBullet {
     conflict(baddies) {
         for (var i = baddies.length - 1; i >= 0; i--) {
             if (baddies[i].alliance != this.alliance) {
-                if (baddies[i].x-baddies[i].size*baddies[i].width < this.x &&
-                    this.x < baddies[i].x+baddies[i].size*baddies[i].width &&
-                    baddies[i].y-baddies[i].size*baddies[i].height < this.y &&
-                    this.y < baddies[i].y+baddies[i].size*baddies[i].height) {
+                if (baddies[i].x-baddies[i].size*baddies[i].width < this.x+this.size/2 &&
+                    this.x-this.size/2 < baddies[i].x+baddies[i].size*baddies[i].width &&
+                    baddies[i].y-baddies[i].size*baddies[i].height < this.y+this.size/2 &&
+                    this.y-this.size/2 < baddies[i].y+baddies[i].size*baddies[i].height) {
                     this.deal_effect(baddies[i]);
                 }
             }
@@ -41,6 +44,7 @@ export class Bullet extends BaseBullet {
     deal_effect(ship) {
         this.has_struck = true;
         ship.damage += this.harm;
-        // TODO: Add hit-effect
+
+        this.stage.add_effect(new Effect(this.x, this.y));
     }
 }

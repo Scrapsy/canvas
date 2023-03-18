@@ -1,13 +1,29 @@
+import { Framing } from "./../bg/frame.js";
 import { ShipAngy } from "./../objects/baddies.js";
+import { HealthBar, PC } from "./../objects/pc.js";
+import { TextHandler } from "./../text/text.js";
+import { MainMenu } from "./main_menu.js";
 
-export class Stage1 {
+class BaseStage {
     constructor(pc) {
         this.pc = pc;
+        this.pc.set_stage(this);
         this.bullets = [];
-        this.baddies = [new ShipAngy(150, 0, this.pc)];
+        this.baddies = [];
+        this.effects = [];
+        this.hp = new HealthBar(this.pc);
+        this.frame = new Framing();
+        this.failed = 60;
+        this.failing = 0;
+        this.failed_text = new TextHandler(" broke down", 55, 250, 4);
+        this.new_stage = false;
     }
 
     draw(ctx) {
+        ctx.beginPath();
+        this.frame.draw_background(ctx);
+        ctx.closePath();
+
         ctx.beginPath();
         this.pc.draw(ctx);
         ctx.closePath();
@@ -23,42 +39,105 @@ export class Stage1 {
             this.baddies[i].draw(ctx);
             ctx.closePath();
         }
+
+        for (var i = this.effects.length - 1; i >= 0; i--) {
+            ctx.beginPath();
+            this.effects[i].draw(ctx);
+            ctx.closePath();
+        }
+
+        ctx.beginPath();
+        this.frame.draw_foreground(ctx);
+        ctx.closePath();
+
+        ctx.beginPath();
+        this.hp.draw(ctx);
+        ctx.closePath();
+
+        if (this.failing >= 1) {
+            ctx.beginPath();
+            ctx.strokeStyle = "#FF00FF";
+            this.failed_text.draw(ctx);
+            ctx.closePath();
+        }
     }
 
     action(controls) {
-        this.pc.think(controls);
-
-        var spawn = this.pc.spawn();
-        if (spawn) {
-            this.bullets.push(spawn);
-        }
-
-        for (var i = this.bullets.length - 1; i >= 0; i--) {
-            if (this.bullets[i].think()) {
-                this.bullets.splice(i, 1);
+        if (this.failing < this.failed) {
+            if (this.pc.think(controls)) {
+                this.failing += 1;
+            } else {
+                this.failing = 0;
             }
-        }
 
-        for (var i = this.baddies.length - 1; i >= 0; i--) {
-            if (this.baddies[i].think()) {
-                this.baddies.splice(i, 1);
+            for (var i = this.bullets.length - 1; i >= 0; i--) {
+                if (this.bullets[i].think()) {
+                    this.bullets.splice(i, 1);
+                }
             }
-        }
 
-        for (var i = this.bullets.length - 1; i >= 0; i--) {
-            if (this.bullets[i].conflict([...this.baddies].concat([this.pc]))) {
-                this.bullets.splice(i, 1);
+            for (var i = this.baddies.length - 1; i >= 0; i--) {
+                if (this.baddies[i].think()) {
+                    this.baddies.splice(i, 1);
+                }
             }
-        }
 
-        for (var i = this.baddies.length - 1; i >= 0; i--) {
-            if (this.baddies[i].conflict(this.pc)) {
-                this.baddies.splice(i, 1);
+            for (var i = this.effects.length - 1; i >= 0; i--) {
+                if(this.effects[i].think()) {
+                    this.effects.splice(i, 1);
+                }
             }
+
+            for (var i = this.bullets.length - 1; i >= 0; i--) {
+                if (this.bullets[i].conflict([...this.baddies].concat([this.pc]))) {
+                    this.bullets.splice(i, 1);
+                }
+            }
+
+            for (var i = this.baddies.length - 1; i >= 0; i--) {
+                if (this.baddies[i].conflict(this.pc)) {
+                    this.baddies.splice(i, 1);
+                }
+            }
+        } else {
+            this.new_stage = new MainMenu(new PC());
         }
     }
 
     change_stage() {
-        return false;
+        return this.new_stage;
+    }
+
+    add_baddie(ship) {
+        this.baddies.push(ship);
+    }
+
+    add_bullet(bullet) {
+        this.bullets.push(bullet);
+    }
+
+    add_effect(effect) {
+        this.effects.push(effect);
+    }
+}
+
+export class Stage1 extends BaseStage {
+    constructor(pc) {
+        super(pc);
+        this.spawn_baddies = [
+            [100, new ShipAngy(150, 0, this.pc, this)],
+            [200, new ShipAngy(150, 0, this.pc, this)]
+        ];
+        this.timer = 0;
+    }
+
+    action(controls) {
+        super.action(controls);
+
+        this.timer += 1;
+
+        while(0 < this.spawn_baddies.length && this.timer >= this.spawn_baddies[0][0]) {
+            this.add_baddie(this.spawn_baddies.shift()[1]);
+        }
     }
 }

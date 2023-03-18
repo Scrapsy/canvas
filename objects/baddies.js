@@ -1,6 +1,8 @@
+import { ShipExplode } from "./effects.js";
+
 class BaseShip {
-    constructor(x, y, pc) {
-        this.x=x; this.y=y; this.speed=1; this.pc=pc;
+    constructor(x, y, pc, stage) {
+        this.x=x; this.y=y; this.speed=1; this.pc=pc; this.stage=stage;
         this.size=4; this.fire_rate=60; this.fire=this.fire_rate;
         this.alliance="unknown"; this.color="#FF00FF";
         this.width=2; this.height=2; this.damage=0; this.hp=1;
@@ -28,10 +30,10 @@ class BaseShip {
 
     conflict(pc) {
         if (pc.alliance != this.alliance) {
-            if (this.x-this.size*this.width < pc.x &&
-                pc.x < this.x+this.size*this.width &&
-                this.y-this.size*this.height < pc.y &&
-                pc.y < this.y+this.size*this.height) {
+            if (this.x-this.size*this.width < pc.x+pc.size*pc.width &&
+                pc.x-pc.size*pc.width < this.x+this.size*this.width &&
+                this.y-this.size*this.height < pc.y+pc.size*pc.height &&
+                pc.y-pc.size*pc.height < this.y+this.size*this.height) {
                 this.deal_effect(pc);
             }
         }
@@ -55,8 +57,8 @@ export class Template extends BaseShip {
 }
 
 export class ShipAngy extends BaseShip {
-    constructor(x, y, pc) {
-        super(x, y, pc);
+    constructor(x, y, pc, stage) {
+        super(x, y, pc, stage);
         this.alliance="angy"; this.color="#0000FF";
         this.lines = [
             [-2, 2],
@@ -95,7 +97,7 @@ export class ShipAngy extends BaseShip {
     }
 
     explode() {
-        // TODO: Add death-effect
+        this.stage.add_effect(new ShipExplode(this.x, this.y));
     }
 
     spawn() {

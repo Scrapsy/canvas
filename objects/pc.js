@@ -1,4 +1,5 @@
 import { Bullet } from "./bullet.js";
+import { ShipExplode } from "./effects.js";
 
 export class PC {
     constructor() {
@@ -6,6 +7,7 @@ export class PC {
         this.size=4; this.fire_rate=60; this.fire=this.fire_rate;
         this.alliance="pc"; this.color="#000";
         this.width=2; this.height=2; this.hp=3; this.damage=0;
+        this.controls=false; this.stage=false;
 
         this.lines = [
             [-2, -2],
@@ -17,7 +19,10 @@ export class PC {
             [-2, 0],
             [-2, -2],
         ];
-        this.controls = false;
+    }
+
+    set_stage(stage) {
+        this.stage = stage;
     }
 
     draw(ctx) {
@@ -76,15 +81,65 @@ export class PC {
         }
 
         if (this.hp <= this.damage) {
-            // TODO: Add death-effect and loose screen
+            this.stage.add_effect(new ShipExplode(this.x, this.y));
         }
-    }
 
-    spawn() {
         if (this.fire <= 0 & this.controls.is_space) {
             this.fire = this.fire_rate;
-            return new Bullet(this.x, this.y, 0, this.alliance);
+            this.stage.add_bullet(new Bullet(this.x, this.y, 0, this.alliance, this.stage));
         }
-        return false;
+        return this.hp <= this.damage;
+    }
+}
+
+export class HealthBar {
+    constructor(pc) {
+        this.pc = pc;
+        this.x = 15;
+        this.y = 565;
+        this.width = 75;
+        this.height = 20;
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = "#111";
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        if (this.pc.damage <= this.pc.hp) {
+            ctx.fillStyle = `rgb(
+                ${200*(this.pc.damage/this.pc.hp)},
+                ${200*(1-(this.pc.damage/this.pc.hp))},
+                0
+            )`;
+            ctx.fillRect(this.x, this.y, this.width*(1-(this.pc.damage/this.pc.hp)), this.height);
+
+            ctx.fillStyle = `rgb(
+                ${255*(this.pc.damage/this.pc.hp)},
+                ${255*(1-(this.pc.damage/this.pc.hp))},
+                0
+            )`;
+            ctx.fillRect(this.x, this.y, this.width*(1-(this.pc.damage/this.pc.hp)), this.height/6);
+
+            ctx.fillStyle = `rgb(
+                ${100*(this.pc.damage/this.pc.hp)},
+                ${100*(1-(this.pc.damage/this.pc.hp))},
+                0
+            )`;
+            ctx.fillRect(this.x, this.y+this.height-this.height/6, this.width*(1-(this.pc.damage/this.pc.hp)), this.height/6);
+        }
+
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x+this.width, this.y);
+        ctx.lineTo(this.x+this.width, this.y+this.height);
+        ctx.lineTo(this.x, this.y+this.height);
+        ctx.lineTo(this.x, this.y);
+
+        for (var i = this.pc.hp; i >= 0; i--) {
+            ctx.moveTo(this.x+this.width*(1-(i/this.pc.hp)), this.y);
+            ctx.lineTo(this.x+this.width*(1-(i/this.pc.hp)), this.y+this.height);
+        }
+
+        ctx.strokeStyle = "#777";
+        ctx.stroke();
     }
 }
