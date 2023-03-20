@@ -20,6 +20,11 @@ class BaseShip {
     }
 
     think() {
+        this.y += this.speed;
+
+        if (this.fire >= 0) {
+            this.fire -= 1;
+        }
         if (this.hp <= this.damage) {
             this.explode();
         }
@@ -38,17 +43,14 @@ class BaseShip {
             }
         }
     }
-}
 
-export class Template extends BaseShip {
-    constructor() {
+    deal_effect(pc) {
+        pc.damage += this.harm;
+        this.damage = this.hp;
     }
 
-    draw(ctx) {
-    }
-
-    think() {
-        return super.think();
+    explode() {
+        this.stage.add_effect(new ShipExplode(this.x, this.y));
     }
 
     spawn() {
@@ -80,27 +82,18 @@ export class ShipAngy extends BaseShip {
         ctx.lineTo(2*this.size+this.x, -1.9*this.size+this.y);
         ctx.stroke();
     }
+}
 
-    think() {
-        this.y += this.speed;
-
-        if (this.fire >= 0) {
-            this.fire -= 1;
-        }
-
-        return super.think();
-    }
-
-    deal_effect(pc) {
-        pc.damage += this.harm;
-        this.damage = this.hp;
-    }
-
-    explode() {
-        this.stage.add_effect(new ShipExplode(this.x, this.y));
-    }
-
-    spawn() {
-        return false;
+export class ShipSpike extends BaseShip {
+    constructor(x, y, pc, stage) {
+        super(x, y, pc, stage);
+        this.speed=2;
+        this.alliance="angy"; this.color="#0000FF";
+        this.lines = [
+            [-2, -2],
+            [2, -2],
+            [0, 3],
+            [-2, -2],
+        ];
     }
 }

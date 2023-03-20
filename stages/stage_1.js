@@ -1,5 +1,5 @@
 import { Framing } from "./../bg/frame.js";
-import { ShipAngy } from "./../objects/baddies.js";
+import { ShipAngy, ShipSpike } from "./../objects/baddies.js";
 import { HealthBar, PC } from "./../objects/pc.js";
 import { TextHandler } from "./../text/text.js";
 import { MainMenu } from "./main_menu.js";
@@ -156,7 +156,9 @@ export class Stage1 extends BaseStage {
             [100, new ShipAngy(150, 0, this.pc, this)],
             [200, new ShipAngy(150, 0, this.pc, this)],
             [300, new ShipAngy(75, 0, this.pc, this)],
-            [300, new ShipAngy(225, 0, this.pc, this)]
+            [300, new ShipAngy(225, 0, this.pc, this)],
+            [400, new ShipSpike(100, 0, this.pc, this)],
+            [400, new ShipSpike(200, 0, this.pc, this)],
         ];
     }
 
