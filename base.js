@@ -1,10 +1,12 @@
 import { MainMenu } from "./stages/main_menu.js";
 import { PC } from "./objects/pc.js";
+import { SoundBox } from "./soundbox/soundbox.js";
 
 
 var c = document.getElementById("region");
 var ctx = c.getContext("2d");
 
+var sound_box = new SoundBox();
 var player = new PC();
 var controls = class {
     is_left = false;
@@ -41,7 +43,7 @@ function keyUp(e) {
 window.addEventListener("keydown", keyDown);
 window.addEventListener("keyup", keyUp);
 
-var current_stage = new MainMenu(player);
+var current_stage = new MainMenu(player, sound_box);
 var new_stage = false;
 
 function main_loop() {

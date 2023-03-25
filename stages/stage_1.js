@@ -5,7 +5,7 @@ import { TextHandler } from "./../text/text.js";
 import { MainMenu } from "./main_menu.js";
 
 class BaseStage {
-    constructor(pc) {
+    constructor(pc, sound_box) {
         this.pc = pc;
         this.pc.set_stage(this);
         this.bullets = [];
@@ -22,6 +22,7 @@ class BaseStage {
         this.won_text = new TextHandler(" victory", 75, 250, 4);
         this.new_stage = false;
         this.timer = 0;
+        this.sound_box = sound_box;
     }
 
     draw(ctx) {
@@ -125,7 +126,7 @@ class BaseStage {
             }
         } else {
             if (this.failing >= this.failed) {
-                this.new_stage = new MainMenu(new PC());
+                this.new_stage = new MainMenu(new PC(), this.sound_box);
             } else if (this.winning >= this.won) {
                 this.new_stage = this.get_next_stage();
             }
@@ -147,11 +148,19 @@ class BaseStage {
     add_effect(effect) {
         this.effects.push(effect);
     }
+
+    play_sound(sound_title) {
+        this.sound_box.play(sound_title);
+    }
+
+    play_music(sound_title) {
+        this.sound_box.music(sound_title);
+    }
 }
 
 export class Stage1 extends BaseStage {
-    constructor(pc) {
-        super(pc);
+    constructor(pc, sound_box) {
+        super(pc, sound_box);
         this.spawn_baddies = [
             [100, new ShipAngy(150, 0, this.pc, this)],
             [200, new ShipAngy(150, 0, this.pc, this)],
@@ -160,16 +169,17 @@ export class Stage1 extends BaseStage {
             [400, new ShipSpike(100, 0, this.pc, this)],
             [400, new ShipSpike(200, 0, this.pc, this)],
         ];
+        this.sound_box.music("mm3_s_s");
     }
 
     get_next_stage() {
-        return new Stage2(this.pc);
+        return new Stage2(this.pc, this.sound_box);
     }
 }
 
 export class Stage2 extends BaseStage {
-    constructor(pc) {
-        super(pc);
+    constructor(pc, sound_box) {
+        super(pc, sound_box);
         this.spawn_baddies = [
             [100, new ShipAngy(75, 0, this.pc, this)],
             [100, new ShipAngy(225, 0, this.pc, this)],
@@ -179,6 +189,6 @@ export class Stage2 extends BaseStage {
     }
 
     get_next_stage() {
-        return new Stage1(this.pc);
+        return new Stage1(this.pc, this.sound_box);
     }
 }
