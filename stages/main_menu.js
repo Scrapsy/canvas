@@ -1,13 +1,16 @@
 import { Stage1 } from "./stage_1.js";
-import { Start } from "./buttons.js";
+import { Start, Volume } from "./buttons.js";
 import { TextHandler } from "./../text/text.js";
 import { Framing } from "./../bg/frame.js";
 
 export class MainMenu {
     constructor(pc, sound_box, globals) {
-        this.options = [new Start(150, 350)];
-        this.text_space = new TextHandler(" space", 33, 130, 6);
-        this.text_game = new TextHandler(" game", 50, 180, 6);
+        this.options = [
+            new Start(globals.ctx.canvas.width/2, 300),
+            new Volume(globals.ctx.canvas.width/2, 340, sound_box),
+        ];
+        this.text_space = new TextHandler(" space", globals.ctx.canvas.width/2-115, 130, 6);
+        this.text_game = new TextHandler(" game", globals.ctx.canvas.width/2-100, 180, 6);
         this.run_stage = false;
         this.pc = pc;
         this.frame = new Framing(globals);

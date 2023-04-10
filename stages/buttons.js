@@ -40,3 +40,22 @@ export class Start extends Button {
 
     }
 }
+
+
+
+export class Volume extends Button {
+    constructor(x, y, sound_box) {
+        super(x, y);
+        this.text = new TextHandler(" volume", x-60, y-10, 4);
+        this.sound_box = sound_box;
+    }
+
+    draw(ctx) {
+        super.draw(ctx);
+        this.text.draw(ctx);
+    }
+
+    action() {
+
+    }
+}

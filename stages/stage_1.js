@@ -131,7 +131,7 @@ class BaseStage {
             }
         } else {
             if (this.failing >= this.failed) {
-                this.new_stage = new MainMenu(new PC(), this.sound_box);
+                this.new_stage = new MainMenu(new PC(), this.sound_box, this.globals);
             } else if (this.winning >= this.won) {
                 this.new_stage = this.get_next_stage();
             }
