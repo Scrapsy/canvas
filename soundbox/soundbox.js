@@ -1,7 +1,7 @@
 export class SoundBox {
-    constructor() {
+    constructor(globals) {
         this.sounds = this.preload_sounds();
-        this.change_volume(1.0);
+        this.change_volume(0.05);
     }
 
     change_volume(new_volume) {
@@ -22,6 +22,7 @@ export class SoundBox {
         this.sounds[sound_title].currentTime = 0;
         // TODO: Music should loop
         // TODO: When changing music, make sure to stop the last song
+        // TODO: If changing to song that is already playing, do NOT restart
     }
 
     preload_sounds() {

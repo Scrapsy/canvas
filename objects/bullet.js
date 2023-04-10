@@ -15,8 +15,8 @@ class BaseBullet {
         this.y += this.speed * Math.sin(angle);
 
         return this.has_struck ||
-               0 > this.x || this.x > 300 ||
-               0 > this.y || this.y > 600;
+               0 > this.x || this.x > this.stage.globals.ctx.canvas.width ||
+               0 > this.y || this.y > this.stage.globals.ctx.canvas.height;
     }
 
     conflict(baddies) {

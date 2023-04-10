@@ -6,8 +6,12 @@ import { SoundBox } from "./soundbox/soundbox.js";
 var c = document.getElementById("region");
 var ctx = c.getContext("2d");
 
-var sound_box = new SoundBox();
-var player = new PC();
+var globals = class {
+    ctx = false;
+};
+globals.ctx = ctx;
+var sound_box = new SoundBox(globals);
+var player = new PC(globals);
 var controls = class {
     is_left = false;
     is_right = false;
@@ -43,7 +47,7 @@ function keyUp(e) {
 window.addEventListener("keydown", keyDown);
 window.addEventListener("keyup", keyUp);
 
-var current_stage = new MainMenu(player, sound_box);
+var current_stage = new MainMenu(player, sound_box, globals);
 var new_stage = false;
 
 function main_loop() {

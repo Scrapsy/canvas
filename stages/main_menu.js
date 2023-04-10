@@ -4,14 +4,15 @@ import { TextHandler } from "./../text/text.js";
 import { Framing } from "./../bg/frame.js";
 
 export class MainMenu {
-    constructor(pc, sound_box) {
+    constructor(pc, sound_box, globals) {
         this.options = [new Start(150, 350)];
         this.text_space = new TextHandler(" space", 33, 130, 6);
         this.text_game = new TextHandler(" game", 50, 180, 6);
         this.run_stage = false;
         this.pc = pc;
-        this.frame = new Framing();
+        this.frame = new Framing(globals);
         this.sound_box = sound_box;
+        this.globals = globals;
     }
 
     draw(ctx) {
@@ -35,7 +36,7 @@ export class MainMenu {
     action(controls) {
         this.run_stage = false;
         if (controls.is_space) {
-            this.run_stage = new Stage1(this.pc, this.sound_box);
+            this.run_stage = new Stage1(this.pc, this.sound_box, this.globals);
         }
         // TODO: Add volume control
     }

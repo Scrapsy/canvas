@@ -5,7 +5,7 @@ import { TextHandler } from "./../text/text.js";
 import { MainMenu } from "./main_menu.js";
 
 class BaseStage {
-    constructor(pc, sound_box) {
+    constructor(pc, sound_box, globals) {
         this.pc = pc;
         this.pc.set_stage(this);
         this.bullets = [];
@@ -23,6 +23,11 @@ class BaseStage {
         this.new_stage = false;
         this.timer = 0;
         this.sound_box = sound_box;
+        this.globals = globals;
+    }
+
+    get_globals() {
+        return this.globals;
     }
 
     draw(ctx) {
@@ -159,8 +164,8 @@ class BaseStage {
 }
 
 export class Stage1 extends BaseStage {
-    constructor(pc, sound_box) {
-        super(pc, sound_box);
+    constructor(pc, sound_box, globals) {
+        super(pc, sound_box, globals);
         this.spawn_baddies = [
             [100, new ShipAngy(150, 0, this.pc, this)],
             [200, new ShipAngy(150, 0, this.pc, this)],
@@ -173,13 +178,13 @@ export class Stage1 extends BaseStage {
     }
 
     get_next_stage() {
-        return new Stage2(this.pc, this.sound_box);
+        return new Stage2(this.pc, this.sound_box, this.globals);
     }
 }
 
 export class Stage2 extends BaseStage {
-    constructor(pc, sound_box) {
-        super(pc, sound_box);
+    constructor(pc, sound_box, globals) {
+        super(pc, sound_box, globals);
         this.spawn_baddies = [
             [100, new ShipAngy(75, 0, this.pc, this)],
             [100, new ShipAngy(225, 0, this.pc, this)],
@@ -189,6 +194,6 @@ export class Stage2 extends BaseStage {
     }
 
     get_next_stage() {
-        return new Stage1(this.pc, this.sound_box);
+        return new Stage1(this.pc, this.sound_box, this.globals);
     }
 }

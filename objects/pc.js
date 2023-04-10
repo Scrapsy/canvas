@@ -2,12 +2,13 @@ import { Bullet } from "./bullet.js";
 import { ShipExplode } from "./effects.js";
 
 export class PC {
-    constructor() {
-        this.x=150; this.y=500; this.speed=2;
+    constructor(globals) {
+        this.x=320; this.y=410; this.speed=2;
         this.size=4; this.fire_rate=30; this.fire=this.fire_rate;
         this.alliance="pc"; this.color="#000";
         this.width=2; this.height=2; this.hp=3; this.damage=0;
         this.controls=false; this.stage=false;
+        this.globals = globals;
 
         this.lines = [
             [-2, -2],
@@ -66,14 +67,14 @@ export class PC {
 
         if (this.x < 5+this.size*2) {
             this.x = 5+this.size*2;
-        } else if (295-this.size*2 < this.x) {
-            this.x = 295-this.size*2;
+        } else if (this.globals.ctx.canvas.width-5-this.size*2 < this.x) {
+            this.x = this.globals.ctx.canvas.width-5-this.size*2;
         }
 
         if (this.y < 5+this.size*2) {
             this.y = 5+this.size*2;
-        } else if (550-this.size*2 < this.y) {
-            this.y = 550-this.size*2;
+        } else if (this.globals.ctx.canvas.height-50-this.size*2 < this.y) {
+            this.y = this.globals.ctx.canvas.height-50-this.size*2;
         }
 
         if (this.fire >= 0) {
@@ -97,7 +98,7 @@ export class HealthBar {
     constructor(pc) {
         this.pc = pc;
         this.x = 15;
-        this.y = 565;
+        this.y = 445;
         this.width = 75;
         this.height = 20;
     }

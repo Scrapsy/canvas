@@ -8,6 +8,8 @@ class BaseShip {
         this.width=2; this.height=2; this.damage=0; this.hp=1;
         this.harm=2;
         this.lines = [];
+        this.stage_width = stage.globals.ctx.canvas.width;
+        this.stage_height = stage.globals.ctx.canvas.height;
     }
 
     draw(ctx) {
@@ -29,8 +31,8 @@ class BaseShip {
             this.explode();
         }
         return this.hp <= this.damage ||
-               0 > this.x || this.x > 300 ||
-               0 > this.y || this.y > 600;
+               0 > this.x || this.x > this.stage_width ||
+               0 > this.y || this.y > this.stage_height;
     }
 
     conflict(pc) {
