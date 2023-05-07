@@ -1,5 +1,5 @@
 import { Stage1 } from "./stage_1.js";
-import { Start, Volume } from "./buttons.js";
+import { Start } from "./buttons.js";
 import { TextHandler } from "./../text/text.js";
 import { Framing } from "./../bg/frame.js";
 
@@ -7,7 +7,6 @@ export class MainMenu {
     constructor(pc, sound_box, globals) {
         this.options = [
             new Start(globals.ctx.canvas.width/2, 300),
-            new Volume(globals.ctx.canvas.width/2, 340, sound_box),
         ];
         this.text_space = new TextHandler(" space", globals.ctx.canvas.width/2-115, 130, 6);
         this.text_game = new TextHandler(" game", globals.ctx.canvas.width/2-100, 180, 6);
@@ -41,7 +40,6 @@ export class MainMenu {
         if (controls.is_space) {
             this.run_stage = new Stage1(this.pc, this.sound_box, this.globals);
         }
-        // TODO: Add volume control
     }
 
     change_stage() {

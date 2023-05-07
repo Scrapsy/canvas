@@ -1,13 +1,27 @@
 export class SoundBox {
     constructor(globals) {
         this.sounds = this.preload_sounds();
-        this.change_volume(0.05);
+        this.volume = 0;
+
+        this.did_plus = false;
+        this.did_minus = false;
+        this.last_change = 0;
+
+        this.volumes = [0, 0.045, 0.096, 0.154, 0.221, 0.301, 0.397, 0.522, 0.698, 1]
+        this.change_volume(1);
     }
 
-    change_volume(new_volume) {
-        this.volume = new_volume;
+    change_volume(change) {
+        this.volume += change;
+        if (this.volume > this.volumes.length - 1) {
+            this.volume = this.volumes.length - 1;
+        }
+        else if (this.volume < 0) {
+            this.volume = 0;
+        }
+
         for(var key in this.sounds) {
-            this.sounds[key].volume = this.volume;
+            this.sounds[key].volume = this.volumes[this.volume];
         }
     }
 
@@ -31,5 +45,40 @@ export class SoundBox {
             "mmx_r_s": new Audio("./soundbox/mmx_reg_shot.wav")
         };
         return sounds;
+    }
+
+    action(controls) {
+        if (controls.is_plus && !this.did_plus) {
+            this.change_volume(1);
+            this.last_change = 90;
+        }
+        if (controls.is_minus && !this.did_minus) {
+            this.change_volume(-1);
+            this.last_change = 90;
+        }
+        this.did_plus = controls.is_plus;
+        this.did_minus = controls.is_minus;
+        if (this.last_change > 0) {
+            this.last_change -= 1;
+        }
+    }
+
+    draw(ctx) {
+        if (this.last_change > 0) {
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(5, 5, 100, 15);
+
+            ctx.strokeStyle = "#333";
+
+            ctx.moveTo(5, 5);
+            ctx.lineTo(105, 5);
+            ctx.lineTo(105, 20);
+            ctx.lineTo(5, 20);
+            ctx.lineTo(5, 5);
+            ctx.stroke();
+
+            ctx.fillStyle = "#0d0";
+            ctx.fillRect(5, 5, this.volume*10, 15);
+        }
     }
 }

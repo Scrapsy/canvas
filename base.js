@@ -18,6 +18,8 @@ var controls = class {
     is_up = false;
     is_down = false;
     is_space = false;
+    is_plus = false;
+    is_minus = false;
 };
 
 function updateControl(e, new_state) {
@@ -33,6 +35,13 @@ function updateControl(e, new_state) {
     }
     if (e.keyCode === 32 || e.keyCode === 16) {
         controls.is_space = new_state;
+    }
+
+    if (e.key === '+') {
+        controls.is_plus = new_state;
+    }
+    if (e.key === '-') {
+        controls.is_minus = new_state;
     }
 }
 
@@ -54,6 +63,8 @@ function main_loop() {
     current_stage.draw(ctx);
 
     current_stage.action(controls);
+    sound_box.action(controls);
+
     new_stage = current_stage.change_stage();
     if (new_stage) {
         current_stage = new_stage;

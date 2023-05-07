@@ -78,6 +78,10 @@ class BaseStage {
             this.won_text.draw(ctx);
             ctx.closePath();
         }
+
+        ctx.beginPath();
+        this.sound_box.draw(ctx);
+        ctx.closePath();
     }
 
     action(controls) {
