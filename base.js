@@ -11,7 +11,6 @@ var globals = class {
 };
 globals.ctx = ctx;
 var sound_box = new SoundBox(globals);
-var player = new PC(globals);
 var controls = class {
     is_left = false;
     is_right = false;
@@ -56,7 +55,7 @@ function keyUp(e) {
 window.addEventListener("keydown", keyDown);
 window.addEventListener("keyup", keyUp);
 
-var current_stage = new MainMenu(player, sound_box, globals);
+var current_stage = new MainMenu(sound_box, globals);
 var new_stage = false;
 
 function main_loop() {

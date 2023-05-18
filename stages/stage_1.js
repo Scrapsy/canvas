@@ -16,10 +16,10 @@ class BaseStage {
         this.frame = new Framing();
         this.failed = 100;
         this.failing = 0;
-        this.failed_text = new TextHandler(" broke down", 55, 250, 4);
+        this.failed_text = new TextHandler(" broke down", 215, 200, 4);
         this.won = 100;
         this.winning = 0;
-        this.won_text = new TextHandler(" victory", 75, 250, 4);
+        this.won_text = new TextHandler(" victory", 235, 200, 4);
         this.new_stage = false;
         this.timer = 0;
         this.sound_box = sound_box;
@@ -135,7 +135,7 @@ class BaseStage {
             }
         } else {
             if (this.failing >= this.failed) {
-                this.new_stage = new MainMenu(new PC(), this.sound_box, this.globals);
+                this.new_stage = new MainMenu(this.sound_box, this.globals);
             } else if (this.winning >= this.won) {
                 this.new_stage = this.get_next_stage();
             }
@@ -168,7 +168,8 @@ class BaseStage {
 }
 
 export class Stage1 extends BaseStage {
-    constructor(pc, sound_box, globals) {
+    constructor(sound_box, globals) {
+        var pc = new PC(globals);
         super(pc, sound_box, globals);
         this.spawn_baddies = [
             [100, new ShipAngy(150, 0, this.pc, this)],
@@ -182,12 +183,13 @@ export class Stage1 extends BaseStage {
     }
 
     get_next_stage() {
-        return new Stage2(this.pc, this.sound_box, this.globals);
+        return new Stage2(this.sound_box, this.globals);
     }
 }
 
 export class Stage2 extends BaseStage {
-    constructor(pc, sound_box, globals) {
+    constructor(sound_box, globals) {
+        var pc = new PC(globals);
         super(pc, sound_box, globals);
         this.spawn_baddies = [
             [100, new ShipAngy(75, 0, this.pc, this)],
@@ -198,6 +200,6 @@ export class Stage2 extends BaseStage {
     }
 
     get_next_stage() {
-        return new Stage1(this.pc, this.sound_box, this.globals);
+        return new Stage1(this.sound_box, this.globals);
     }
 }

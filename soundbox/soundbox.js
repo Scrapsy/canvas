@@ -1,7 +1,9 @@
 export class SoundBox {
     constructor(globals) {
-        this.sounds = this.preload_sounds();
+        this.preload_sounds();
+        this.preload_songs();
         this.volume = 0;
+        this.currently_playing = "";
 
         this.did_plus = false;
         this.did_minus = false;
@@ -20,31 +22,39 @@ export class SoundBox {
             this.volume = 0;
         }
 
-        for(var key in this.sounds) {
-            this.sounds[key].volume = this.volumes[this.volume];
+        for(var key in this.songs) {
+            this.songs[key].volume = this.volumes[this.volume];
         }
     }
 
     play(sound_title) {
-        this.sounds[sound_title].play();
-        this.sounds[sound_title].currentTime = 0;
-        // TODO: allow same sound overlap
+        let sound = this.sounds[sound_title].cloneNode(true);
+        sound.volume = this.volumes[this.volume];
+        sound.play();
     }
 
     music(sound_title) {
-        this.sounds[sound_title].play();
-        this.sounds[sound_title].currentTime = 0;
-        // TODO: Music should loop
-        // TODO: When changing music, make sure to stop the last song
-        // TODO: If changing to song that is already playing, do NOT restart
+        if (sound_title != this.currently_playing) {
+            if (this.currently_playing != "") {
+                this.songs[this.currently_playing].stop();
+            }
+            this.songs[sound_title].currentTime = 0;
+            this.songs[sound_title].loop = true;
+            this.songs[sound_title].play();
+            this.currently_playing = sound_title;
+        }
     }
 
     preload_sounds() {
-        var sounds = {
-            "mm3_s_s": new Audio("./soundbox/mm3_snakeman_stage.wav"),
+        this.sounds = {
             "mmx_r_s": new Audio("./soundbox/mmx_reg_shot.wav")
         };
-        return sounds;
+    }
+
+    preload_songs() {
+        this.songs = {
+            "mm3_s_s": new Audio("./soundbox/mm3_snakeman_stage.wav")
+        };
     }
 
     action(controls) {
