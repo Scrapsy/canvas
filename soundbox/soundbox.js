@@ -1,13 +1,13 @@
 export class SoundBox {
     volume = 0;
-    currently_playing = "";
+    volumes = [0, 0.045, 0.096, 0.154, 0.221, 0.301, 0.397, 0.522, 0.698, 1];
 
     did_plus = false;
     did_minus = false;
     last_change = 0;
-    has_started = [];
 
-    volumes = [0, 0.045, 0.096, 0.154, 0.221, 0.301, 0.397, 0.522, 0.698, 1];
+    currently_playing = "";
+    has_started = [];
 
     constructor(globals) {
         this.preload_sounds();
