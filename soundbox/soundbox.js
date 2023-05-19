@@ -1,15 +1,17 @@
 export class SoundBox {
+    volume = 0;
+    currently_playing = "";
+
+    did_plus = false;
+    did_minus = false;
+    last_change = 0;
+    has_started = [];
+
+    volumes = [0, 0.045, 0.096, 0.154, 0.221, 0.301, 0.397, 0.522, 0.698, 1];
+
     constructor(globals) {
         this.preload_sounds();
         this.preload_songs();
-        this.volume = 0;
-        this.currently_playing = "";
-
-        this.did_plus = false;
-        this.did_minus = false;
-        this.last_change = 0;
-
-        this.volumes = [0, 0.045, 0.096, 0.154, 0.221, 0.301, 0.397, 0.522, 0.698, 1]
         this.change_volume(1);
     }
 
@@ -27,6 +29,13 @@ export class SoundBox {
         }
     }
 
+    play_once(sound_title) {
+        if (this.has_started.indexOf(sound_title) < 0) {
+            this.has_started.push(sound_title);
+            this.play(sound_title);
+        }
+    }
+
     play(sound_title) {
         let sound = this.sounds[sound_title].cloneNode(true);
         sound.volume = this.volumes[this.volume];
@@ -38,22 +47,25 @@ export class SoundBox {
             if (this.currently_playing != "") {
                 this.songs[this.currently_playing].stop();
             }
-            this.songs[sound_title].currentTime = 0;
-            this.songs[sound_title].loop = true;
-            this.songs[sound_title].play();
+            if (sound_title != "") {
+                this.songs[sound_title].currentTime = 0;
+                this.songs[sound_title].loop = true;
+                this.songs[sound_title].play();
+            }
             this.currently_playing = sound_title;
         }
     }
 
     preload_sounds() {
         this.sounds = {
-            "mmx_r_s": new Audio("./soundbox/mmx_reg_shot.wav")
+            "regular_shot": new Audio("./soundbox/sounds/mmx_reg_shot.wav"),
+            "hurt": new Audio("./soundbox/sounds/mmx_x_hurt.wav")
         };
     }
 
     preload_songs() {
         this.songs = {
-            "mm3_s_s": new Audio("./soundbox/mm3_snakeman_stage.wav")
+            "song_one": new Audio("./soundbox/songs/mm3_snakeman_stage.wav")
         };
     }
 
@@ -71,6 +83,7 @@ export class SoundBox {
         if (this.last_change > 0) {
             this.last_change -= 1;
         }
+        this.has_started = [];
     }
 
     draw(ctx) {

@@ -162,6 +162,10 @@ class BaseStage {
         this.sound_box.play(sound_title);
     }
 
+    play_sound_once(sound_title) {
+        this.sound_box.play_once(sound_title);
+    }
+
     play_music(sound_title) {
         this.sound_box.music(sound_title);
     }
@@ -173,13 +177,13 @@ export class Stage1 extends BaseStage {
         super(pc, sound_box, globals);
         this.spawn_baddies = [
             [100, new ShipAngy(150, 0, this.pc, this)],
-            [200, new ShipAngy(150, 0, this.pc, this)],
-            [300, new ShipAngy(75, 0, this.pc, this)],
-            [300, new ShipAngy(225, 0, this.pc, this)],
-            [400, new ShipSpike(100, 0, this.pc, this)],
-            [400, new ShipSpike(200, 0, this.pc, this)],
+            [150, new ShipAngy(150, 0, this.pc, this)],
+            [200, new ShipAngy(75, 0, this.pc, this)],
+            [200, new ShipAngy(225, 0, this.pc, this)],
+            [250, new ShipSpike(100, 0, this.pc, this)],
+            [250, new ShipSpike(200, 0, this.pc, this)],
         ];
-        this.sound_box.music("mm3_s_s");
+        this.sound_box.music("song_one");
     }
 
     get_next_stage() {
@@ -194,8 +198,8 @@ export class Stage2 extends BaseStage {
         this.spawn_baddies = [
             [100, new ShipAngy(75, 0, this.pc, this)],
             [100, new ShipAngy(225, 0, this.pc, this)],
-            [150, new ShipAngy(75, 0, this.pc, this)],
-            [150, new ShipAngy(225, 0, this.pc, this)]
+            [125, new ShipAngy(75, 0, this.pc, this)],
+            [125, new ShipAngy(225, 0, this.pc, this)]
         ];
     }
 

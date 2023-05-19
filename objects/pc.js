@@ -3,8 +3,8 @@ import { ShipExplode } from "./effects.js";
 
 export class PC {
     constructor(globals) {
-        this.x=320; this.y=410; this.speed=2;
-        this.size=4; this.fire_rate=30; this.fire=this.fire_rate;
+        this.x=320; this.y=410; this.speed=4;
+        this.size=4; this.fire_rate=10; this.fire=this.fire_rate;
         this.alliance="pc"; this.color="#000";
         this.width=2; this.height=2; this.hp=3; this.damage=0;
         this.controls=false; this.stage=false;
@@ -88,7 +88,7 @@ export class PC {
         if (this.fire <= 0 & this.controls.is_space) {
             this.fire = this.fire_rate;
             this.stage.add_bullet(new Bullet(this.x, this.y, 0, this.alliance, this.stage));
-            this.stage.play_sound("mmx_r_s");
+            this.stage.play_sound("regular_shot");
         }
         return this.hp <= this.damage;
     }

@@ -3,7 +3,7 @@ import { Effect } from "./effects.js";
 class BaseBullet {
     constructor(x, y, direction, alliance, stage) {
         this.x=x; this.y=y; this.direction=direction;
-        this.speed=4; this.alliance=alliance;
+        this.speed=10; this.alliance=alliance;
         this.size=4; this.color="#000";
         this.harm=1; this.has_struck=false;
         this.stage=stage;
@@ -46,5 +46,6 @@ export class Bullet extends BaseBullet {
         ship.damage += this.harm;
 
         this.stage.add_effect(new Effect(this.x, this.y));
+        this.stage.play_sound_once("hurt");
     }
 }

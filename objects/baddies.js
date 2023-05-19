@@ -2,7 +2,7 @@ import { ShipExplode } from "./effects.js";
 
 class BaseShip {
     constructor(x, y, pc, stage) {
-        this.x=x; this.y=y; this.speed=1; this.pc=pc; this.stage=stage;
+        this.x=x; this.y=y; this.speed=2; this.pc=pc; this.stage=stage;
         this.size=4; this.fire_rate=60; this.fire=this.fire_rate;
         this.alliance="unknown"; this.color="#FF00FF";
         this.width=2; this.height=2; this.damage=0; this.hp=1;
@@ -53,6 +53,7 @@ class BaseShip {
 
     explode() {
         this.stage.add_effect(new ShipExplode(this.x, this.y));
+        this.stage.play_sound_once("hurt");
     }
 
     spawn() {
@@ -89,7 +90,7 @@ export class ShipAngy extends BaseShip {
 export class ShipSpike extends BaseShip {
     constructor(x, y, pc, stage) {
         super(x, y, pc, stage);
-        this.speed=2;
+        this.speed=4;
         this.alliance="angy"; this.color="#0000FF";
         this.lines = [
             [-2, -2],

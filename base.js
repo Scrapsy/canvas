@@ -1,5 +1,4 @@
 import { MainMenu } from "./stages/main_menu.js";
-import { PC } from "./objects/pc.js";
 import { SoundBox } from "./soundbox/soundbox.js";
 
 
@@ -70,4 +69,6 @@ function main_loop() {
     }
 }
 
-setInterval(main_loop, 10);
+const UPDATES_PER_SECOND = 60;
+const UPDATES_IN_MS = 1000/UPDATES_PER_SECOND;
+setInterval(main_loop, UPDATES_IN_MS);
