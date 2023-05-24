@@ -17,7 +17,7 @@ class BaseShip {
     draw(ctx) {
         ctx.strokeStyle = this.color;
         ctx.moveTo(this.lines[0][0]*this.size+this.x, this.lines[0][1]*this.size+this.y);
-        for (var i = this.lines.length - 1; i >= 0; i--) {
+        for (let i = this.lines.length - 1; i >= 0; i--) {
             ctx.lineTo(this.lines[i][0]*this.size+this.x, this.lines[i][1]*this.size+this.y);
         }
         ctx.stroke();

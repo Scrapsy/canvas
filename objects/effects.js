@@ -43,7 +43,7 @@ export class ShipExplode extends BaseEffect {
         ctx.fillStyle = "#333";
         ctx.strokeStyle = "#000";
 
-        for (var i = this.booms.length - 1; i >= 0; i--) {
+        for (let i = this.booms.length - 1; i >= 0; i--) {
             if(this.booms[i][0] < this.timer) {
                 ctx.arc(this.booms[i][1], this.booms[i][2], this.rad, 0, 2 * Math.PI);
                 ctx.fill();

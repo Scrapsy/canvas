@@ -8,8 +8,8 @@ export class TextHandler {
     }
 
     draw(ctx) {
-        var cal_x = 0;
-        for (var i = this.letters.length - 1; i >= 0; i--) {
+        let cal_x = 0;
+        for (let i = this.letters.length - 1; i >= 0; i--) {
             cal_x = i*this.size*this.size+this.x;
             this.letters[i].draw(ctx, cal_x, this.y);
         }
@@ -17,8 +17,8 @@ export class TextHandler {
 }
 
 function convert_text(text, size) {
-    var letters = [];
-    for (var i = text.length - 1; i >= 0; i--) {
+    let letters = [];
+    for (let i = text.length - 1; i >= 0; i--) {
         switch(text[i]) {
             case "a":
                 letters.push(new LetterA(size));
@@ -115,7 +115,7 @@ class Letter {
 
     draw(ctx, x, y) {
         ctx.moveTo(this.lines[0][0]*this.size+x, this.lines[0][1]*this.size+y);
-        for (var i = this.lines.length - 1; i >= 0; i--) {
+        for (let i = this.lines.length - 1; i >= 0; i--) {
             ctx.lineTo(this.lines[i][0]*this.size+x, this.lines[i][1]*this.size+y);
         }
         ctx.stroke();
@@ -130,7 +130,7 @@ class LetterSpace extends Letter {
 
 class LetterA extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(1*u+x, y);
         ctx.lineTo(2*u+x, y);
         ctx.lineTo(2*u+x, 1*u+y);
@@ -153,7 +153,7 @@ class LetterA extends Letter {
 
 class LetterB extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(2*u+x, y);
         ctx.lineTo(2*u+x, 1*u+y);
@@ -231,7 +231,7 @@ class LetterD extends Letter {
 
 class LetterE extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(3*u+x, y);
         ctx.lineTo(3*u+x, 1*u+y);
@@ -251,7 +251,7 @@ class LetterE extends Letter {
 
 class LetterF extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(3*u+x, y);
         ctx.lineTo(3*u+x, 1*u+y);
@@ -384,7 +384,7 @@ class LetterK extends Letter {
 
 class LetterL extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(1*u+x, y);
         ctx.lineTo(1*u+x, 4*u+y);
@@ -399,7 +399,7 @@ class LetterL extends Letter {
 
 class LetterM extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(1*u+x, y);
         ctx.lineTo(1*u+x, 1*u+y);
@@ -441,7 +441,7 @@ class LetterN extends Letter {
 
 class LetterO extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(1*u+x, y);
         ctx.lineTo(2*u+x, y);
         ctx.lineTo(2*u+x, 1*u+y);
@@ -484,7 +484,7 @@ class LetterP extends Letter {
 
 class LetterQ extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(1*u+x, y);
         ctx.lineTo(2*u+x, y);
         ctx.lineTo(2*u+x, 1*u+y);
@@ -504,7 +504,7 @@ class LetterQ extends Letter {
 
 class LetterR extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(2*u+x, y);
         ctx.lineTo(2*u+x, 1*u+y);
@@ -531,7 +531,7 @@ class LetterR extends Letter {
 
 class LetterS extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(1*u+x, y);
         ctx.lineTo(3*u+x, y);
         ctx.lineTo(3*u+x, 1*u+y);
@@ -559,7 +559,7 @@ class LetterS extends Letter {
 
 class LetterT extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(3*u+x, y);
         ctx.lineTo(3*u+x, 1*u+y);
@@ -575,7 +575,7 @@ class LetterT extends Letter {
 
 class LetterU extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(1*u+x, y);
         ctx.lineTo(1*u+x, 4*u+y);
@@ -591,7 +591,7 @@ class LetterU extends Letter {
 
 class LetterV extends Letter {
     draw(ctx, x, y) {
-        var u = this.size;
+        let u = this.size;
         ctx.moveTo(x, y);
         ctx.lineTo(1*u+x, y);
         ctx.lineTo(1*u+x, 4*u+y);

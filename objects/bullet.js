@@ -11,7 +11,7 @@ class BaseBullet {
     }
 
     think() {
-        var angle = (this.direction - 90) / 180 * Math.PI;
+        let angle = (this.direction - 90) / 180 * Math.PI;
         this.x += this.speed * Math.cos(angle);
         this.y += this.speed * Math.sin(angle);
 
@@ -21,7 +21,7 @@ class BaseBullet {
     }
 
     conflict(baddies) {
-        for (var i = baddies.length - 1; i >= 0; i--) {
+        for (let i = baddies.length - 1; i >= 0; i--) {
             if (baddies[i].alliance != this.alliance) {
                 if (baddies[i].x-baddies[i].size*baddies[i].width < this.x+this.size/2 &&
                     this.x-this.size/2 < baddies[i].x+baddies[i].size*baddies[i].width &&

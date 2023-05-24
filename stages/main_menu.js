@@ -22,7 +22,7 @@ export class MainMenu {
         ctx.closePath();
 
         ctx.beginPath();
-        for (var i = this.options.length - 1; i >= 0; i--) {
+        for (let i = this.options.length - 1; i >= 0; i--) {
             this.options[i].draw(ctx);
         }
         this.text_space.draw(ctx);

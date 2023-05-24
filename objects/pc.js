@@ -29,12 +29,12 @@ export class PC {
     draw(ctx) {
         ctx.strokeStyle = this.color;
         ctx.moveTo(this.lines[0][0]*this.size+this.x, this.lines[0][1]*this.size+this.y);
-        for (var i = this.lines.length - 1; i >= 0; i--) {
+        for (let i = this.lines.length - 1; i >= 0; i--) {
             ctx.lineTo(this.lines[i][0]*this.size+this.x, this.lines[i][1]*this.size+this.y);
         }
         ctx.stroke();
 
-        var flame_force = 3;
+        let flame_force = 3;
         if (this.controls) {
             if (this.controls.is_up) {
                 flame_force = 4;
@@ -136,7 +136,7 @@ export class HealthBar {
         ctx.lineTo(this.x, this.y+this.height);
         ctx.lineTo(this.x, this.y);
 
-        for (var i = this.pc.hp; i >= 0; i--) {
+        for (let i = this.pc.hp; i >= 0; i--) {
             ctx.moveTo(this.x+this.width*(1-(i/this.pc.hp)), this.y);
             ctx.lineTo(this.x+this.width*(1-(i/this.pc.hp)), this.y+this.height);
         }

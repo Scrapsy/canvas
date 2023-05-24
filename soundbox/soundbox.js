@@ -24,7 +24,7 @@ export class SoundBox {
             this.volume = 0;
         }
 
-        for(var key in this.songs) {
+        for(let key in this.songs) {
             this.songs[key].volume = this.volumes[this.volume];
         }
     }

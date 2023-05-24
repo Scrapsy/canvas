@@ -5,7 +5,7 @@ import { Stage1 } from "./stage_1.js";
 
 export class Stage2 extends BaseStage {
     constructor(sound_box, globals) {
-        var pc = new PC(globals);
+        let pc = new PC(globals);
         super(pc, sound_box, globals);
         this.spawn_baddies = [
             [100, new ShipAngy(75, 0, this.pc, this)],

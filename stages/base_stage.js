@@ -38,19 +38,19 @@ export class BaseStage {
         this.pc.draw(ctx);
         ctx.closePath();
 
-        for (var i = this.bullets.length - 1; i >= 0; i--) {
+        for (let i = this.bullets.length - 1; i >= 0; i--) {
             ctx.beginPath();
             this.bullets[i].draw(ctx);
             ctx.closePath();
         }
 
-        for (var i = this.baddies.length - 1; i >= 0; i--) {
+        for (let i = this.baddies.length - 1; i >= 0; i--) {
             ctx.beginPath();
             this.baddies[i].draw(ctx);
             ctx.closePath();
         }
 
-        for (var i = this.effects.length - 1; i >= 0; i--) {
+        for (let i = this.effects.length - 1; i >= 0; i--) {
             ctx.beginPath();
             this.effects[i].draw(ctx);
             ctx.closePath();
@@ -103,34 +103,34 @@ export class BaseStage {
                 this.add_baddie(this.spawn_baddies.shift()[1]);
             }
 
-            for (var i = this.bullets.length - 1; i >= 0; i--) {
+            for (let i = this.bullets.length - 1; i >= 0; i--) {
                 this.bullets[i].think();
                 if (this.bullets[i].is_spent) {
                     this.bullets.splice(i, 1);
                 }
             }
 
-            for (var i = this.baddies.length - 1; i >= 0; i--) {
+            for (let i = this.baddies.length - 1; i >= 0; i--) {
                 this.baddies[i].think();
                 if (this.baddies[i].is_dead) {
                     this.baddies.splice(i, 1);
                 }
             }
 
-            for (var i = this.effects.length - 1; i >= 0; i--) {
+            for (let i = this.effects.length - 1; i >= 0; i--) {
                 this.effects[i].think();
                 if(this.effects[i].is_spent) {
                     this.effects.splice(i, 1);
                 }
             }
 
-            for (var i = this.bullets.length - 1; i >= 0; i--) {
+            for (let i = this.bullets.length - 1; i >= 0; i--) {
                 if (this.bullets[i].conflict([...this.baddies].concat([this.pc]))) {
                     this.bullets.splice(i, 1);
                 }
             }
 
-            for (var i = this.baddies.length - 1; i >= 0; i--) {
+            for (let i = this.baddies.length - 1; i >= 0; i--) {
                 if (this.baddies[i].conflict(this.pc)) {
                     this.baddies.splice(i, 1);
                 }
