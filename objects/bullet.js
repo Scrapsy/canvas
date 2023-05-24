@@ -7,6 +7,7 @@ class BaseBullet {
         this.size=4; this.color="#000";
         this.harm=1; this.has_struck=false;
         this.stage=stage;
+        this.is_spent=false;
     }
 
     think() {
@@ -14,7 +15,7 @@ class BaseBullet {
         this.x += this.speed * Math.cos(angle);
         this.y += this.speed * Math.sin(angle);
 
-        return this.has_struck ||
+        this.is_spent = this.has_struck ||
                0 > this.x || this.x > this.stage.globals.ctx.canvas.width ||
                0 > this.y || this.y > this.stage.globals.ctx.canvas.height;
     }

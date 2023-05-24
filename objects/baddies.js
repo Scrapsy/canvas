@@ -1,3 +1,4 @@
+import { Bullet } from "./bullet.js";
 import { ShipExplode } from "./effects.js";
 
 class BaseShip {
@@ -6,6 +7,7 @@ class BaseShip {
         this.size=4; this.fire_rate=60; this.fire=this.fire_rate;
         this.alliance="unknown"; this.color="#FF00FF";
         this.width=2; this.height=2; this.damage=0; this.hp=1;
+        this.is_dead=false;
         this.harm=2;
         this.lines = [];
         this.stage_width = stage.globals.ctx.canvas.width;
@@ -30,7 +32,7 @@ class BaseShip {
         if (this.hp <= this.damage) {
             this.explode();
         }
-        return this.hp <= this.damage ||
+        this.is_dead = this.hp <= this.damage ||
                0 > this.x || this.x > this.stage_width ||
                0 > this.y || this.y > this.stage_height;
     }
@@ -98,5 +100,51 @@ export class ShipSpike extends BaseShip {
             [0, 3],
             [-2, -2],
         ];
+    }
+}
+
+export class ShipShooter extends BaseShip {
+    fire_rate = 30;
+    fire_tick = 0;
+
+    constructor(x, y, pc, stage) {
+        super(x, y, pc, stage);
+        this.speed=1;
+        this.alliance="angy";
+        this.color="#0000FF";
+        this.lines = [
+            [-2, -1],
+            [-1, -2.5],
+            [0, -3],
+            [1, -2.5],
+            [2, -1],
+            [2, 1],
+            [1, 2.5],
+            [0, 3],
+            [-1, 2.5],
+            [-2, 1],
+            [-2, -1],
+        ];
+    }
+
+    draw(ctx) {
+        super.draw(ctx);
+    }
+
+    think() {
+        super.think();
+
+        this.fire_tick -= 1;
+        if (this.fire_tick < 0) {
+            this.fire_tick = this.fire_rate;
+            this.shoot();
+        }
+    }
+
+    shoot() {
+        let bullet = new Bullet(this.x, this.y, 180, this.alliance, this.stage);
+        bullet.color = this.color;
+        this.stage.add_bullet(bullet);
+        this.stage.play_sound_once("regular_shot");
     }
 }

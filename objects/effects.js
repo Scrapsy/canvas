@@ -3,11 +3,12 @@ class BaseEffect {
         this.x=x; this.y=y;
         this.timer=0;
         this.life_time=5;
+        this.is_spent=false;
     }
 
     think() {
         this.timer += 1;
-        return this.life_time<=this.timer;
+        this.is_spent = this.life_time<=this.timer;
     }
 }
 

@@ -8,9 +8,5 @@ Run `live-server` from root-folder
 
 # Things left
 * More stages/enemies & gameplay
-    * Stage select?
 
 * Powerups?
-
-* Save settings?
-    Ergo volume

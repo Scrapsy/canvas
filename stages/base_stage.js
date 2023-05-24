@@ -104,19 +104,22 @@ export class BaseStage {
             }
 
             for (var i = this.bullets.length - 1; i >= 0; i--) {
-                if (this.bullets[i].think()) {
+                this.bullets[i].think();
+                if (this.bullets[i].is_spent) {
                     this.bullets.splice(i, 1);
                 }
             }
 
             for (var i = this.baddies.length - 1; i >= 0; i--) {
-                if (this.baddies[i].think()) {
+                this.baddies[i].think();
+                if (this.baddies[i].is_dead) {
                     this.baddies.splice(i, 1);
                 }
             }
 
             for (var i = this.effects.length - 1; i >= 0; i--) {
-                if(this.effects[i].think()) {
+                this.effects[i].think();
+                if(this.effects[i].is_spent) {
                     this.effects.splice(i, 1);
                 }
             }
