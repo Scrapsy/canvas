@@ -7,6 +7,11 @@ export class TextHandler {
         this.letters = convert_text(text, this.size);
     }
 
+    changeText(text) {
+        this.text = text;
+        this.letters = convert_text(text, this.size);
+    }
+
     draw(ctx) {
         let cal_x = 0;
         for (let i = this.letters.length - 1; i >= 0; i--) {

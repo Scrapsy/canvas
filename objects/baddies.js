@@ -44,8 +44,10 @@ class BaseShip {
                 this.y-this.size*this.height < pc.y+pc.size*pc.height &&
                 pc.y-pc.size*pc.height < this.y+this.size*this.height) {
                 this.deal_effect(pc);
+                return true;
             }
         }
+        return false;
     }
 
     deal_effect(pc) {
