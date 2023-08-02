@@ -1,3 +1,8 @@
+// TODO: Rebuild this entire thing...
+// I want this to be user configurable
+// Requires saving data though,
+// which I don't want or need atm
+
 export class Controller {
     is_left = false;
     is_right = false;

@@ -14,8 +14,8 @@ let globals = class {
 globals.ctx = ctx;
 let sound_box = new SoundBox(globals);
 
-// let current_stage = new MainMenu(sound_box, globals);
-let current_stage = new CreateStage(sound_box, globals);
+let current_stage = new MainMenu(sound_box, globals);
+// let current_stage = new CreateStage(sound_box, globals);
 let new_stage = false;
 
 function main_loop() {

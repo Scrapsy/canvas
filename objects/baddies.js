@@ -1,6 +1,7 @@
 import { Bullet } from "./bullet.js";
 import { ShipExplode } from "./effects.js";
 
+// TODO: SHIPS SHOULD HAVE SPEED X AND SPEED Y
 class BaseShip {
     constructor(x, y, pc, stage) {
         this.x=x; this.y=y; this.speed=2; this.pc=pc; this.stage=stage;
@@ -129,10 +130,6 @@ export class ShipShooter extends BaseShip {
         ];
     }
 
-    draw(ctx) {
-        super.draw(ctx);
-    }
-
     think() {
         super.think();
 
@@ -148,5 +145,92 @@ export class ShipShooter extends BaseShip {
         bullet.color = this.color;
         this.stage.add_bullet(bullet);
         this.stage.play_sound_once("regular_shot");
+    }
+}
+
+export class BossKraken extends BaseShip {
+    fire_rate = 30;
+    fire_tick = 0;
+
+    constructor(x, y, pc, stage) {
+        super(x, y, pc, stage);
+        this.speed=1;
+        this.speed_x=1;
+        this.alliance="boss";
+        this.color="#FF0000";
+        this.width=20;
+        this.height=12;
+        this.hp=30;
+        this.harm=100;
+        this.lines = [
+            [0, 0],
+            [10, 0],
+            [10, 10],
+            [5, 15],
+            [-5, 15],
+            [-10, 10],
+            [-10, 0],
+            [0, 0],
+            [10, 0],
+            [10, 2],
+            [15, 2],
+            [15, 0],
+            [20, 0],
+            [20, 10],
+            [15, 15],
+            [15, 2],
+            [15, 7],
+            [10, 7],
+            [10, 0],
+            [0, 0],
+            [-10, 0],
+            [-10, 2],
+            [-15, 2],
+            [-15, 0],
+            [-20, 0],
+            [-20, 10],
+            [-15, 15],
+            [-15, 2],
+            [-15, 7],
+            [-10, 7],
+            [-10, 0],
+            [0, 0],
+        ];
+    }
+
+    think() {
+        super.think();
+        this.x += this.speed_x;
+
+        this.fire_tick -= 1;
+        if (this.fire_tick < 0) {
+            this.fire_tick = this.fire_rate;
+            this.shoot();
+        }
+
+        if (this.y > 100) {
+            this.speed = 0;
+        }
+
+        if (this.x > 540 || this.x < 100) {
+            this.speed_x = -this.speed_x;
+        }
+    }
+
+    shoot() {
+        this.shoot_side(50);
+        this.shoot_side(-50);
+
+        this.stage.play_sound_once("regular_shot");
+    }
+
+    shoot_side(side) {
+        for (let i = 0; i < 5; i++) {
+            let bullet = new Bullet(this.x+side, this.y+30, 180, this.alliance, this.stage);
+            bullet.color = this.color;
+            bullet.direction = i*10+160;
+            bullet.speed = 8;
+            this.stage.add_bullet(bullet);
+        }
     }
 }

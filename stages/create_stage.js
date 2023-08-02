@@ -25,6 +25,8 @@ export class CreateStage {
             ctx.closePath();
         }
 
+        this.drawLines(ctx);
+
         ctx.beginPath();
         this.frame.draw_foreground(ctx);
         ctx.closePath();
@@ -32,6 +34,22 @@ export class CreateStage {
         ctx.beginPath();
         ctx.strokeStyle = "#F00";
         this.text_ship.draw(ctx);
+        ctx.closePath();
+    }
+
+    drawLines(ctx) {
+        ctx.beginPath();
+        ctx.strokeStyle = "#000";
+
+        let h = ctx.canvas.height;
+        let w = ctx.canvas.width;
+
+        for (let i = this.stage_y%100; i < h; i += 100) {
+            ctx.moveTo(0, i);
+            ctx.lineTo(w, i);
+        }
+        ctx.stroke();
+
         ctx.closePath();
     }
 

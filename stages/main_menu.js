@@ -1,4 +1,5 @@
 import { Stage1 } from "./stage_1.js";
+import { Stage2 } from "./stage_2.js";
 import { Start } from "./buttons.js";
 import { TextHandler } from "./../text/text.js";
 import { Framing } from "./../bg/frame.js";
@@ -37,7 +38,7 @@ export class MainMenu {
     action(controls) {
         this.run_stage = false;
         if (controls.is_space) {
-            this.run_stage = new Stage1(this.sound_box, this.globals);
+            this.run_stage = new Stage2(this.sound_box, this.globals);
         }
     }
 
