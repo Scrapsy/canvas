@@ -15,9 +15,3 @@ Run `live-server` from root-folder
 * `space` to shoot
 
 * `+` and `-` for volume control
-
-
-# Things left
-* More stages/enemies & gameplay
-
-* Powerups?

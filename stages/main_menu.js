@@ -38,7 +38,7 @@ export class MainMenu {
     action(controls) {
         this.run_stage = false;
         if (controls.is_space) {
-            this.run_stage = new Stage2(this.sound_box, this.globals);
+            this.run_stage = new Stage1(this.sound_box, this.globals);
         }
     }
 

@@ -58,14 +58,15 @@ export class SoundBox {
 
     preload_sounds() {
         this.sounds = {
-            "regular_shot": new Audio("./soundbox/sounds/mmx_reg_shot.wav"),
-            "hurt": new Audio("./soundbox/sounds/mmx_x_hurt.wav")
+            "regular_shot": new Audio("./soundbox/sounds/shot.wav"),
+            "hurt": new Audio("./soundbox/sounds/hit.wav"),
+            "death": new Audio("./soundbox/sounds/death.wav")
         };
     }
 
     preload_songs() {
         this.songs = {
-            "song_one": new Audio("./soundbox/songs/mm3_snakeman_stage.wav")
+            "song_one": new Audio("./soundbox/songs/bobo.wav")
         };
     }
 
